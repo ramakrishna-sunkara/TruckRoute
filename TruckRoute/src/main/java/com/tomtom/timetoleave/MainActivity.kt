@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener {
         private const val TIME_12H_FORMAT = "hh:mm"
         private const val SEARCH_FUZZY_LVL_MIN = 2
         private const val PERMISSION_REQUEST_LOCATION = 0
+        const val MENU_PERMIT = "permit"
+        const val MENU_FOOD_BANK = "food"
     }
 
     var calArriveAt: Calendar = Calendar.getInstance().apply {
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initTomTomServices()
-        //initToolbarSettings()
+        initToolbarSettings()
         initSearchFieldsWithDefaultValues()
         initWhereSection()
         initByWhenSection()
@@ -116,13 +118,21 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val selectedItem = item.itemId
-        if (selectedItem == R.id.toolbar_menu_help) {
-            showHelpActivity()
-            return true
+        return when (item.itemId) {
+            R.id.menu_permit -> {
+                showInWebView(MENU_PERMIT)
+                true
+            }
+            R.id.menu_food_bank -> {
+                showInWebView(MENU_FOOD_BANK)
+                true
+            }
+            R.id.toolbar_menu_help -> {
+                showHelpActivity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
     private fun initTomTomServices() {
@@ -440,6 +450,12 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener {
     private fun showHelpActivity() {
         val helpIntent = Intent(this@MainActivity, HelpActivity::class.java)
         startActivity(helpIntent)
+    }
+
+    private fun showInWebView(type: String) {
+        val webviewIntent = Intent(this@MainActivity, WebViewActivity::class.java)
+        webviewIntent.putExtra("type", type)
+        startActivity(webviewIntent)
     }
 
     private abstract inner class BaseTextWatcher : TextWatcher {

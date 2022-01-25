@@ -37,4 +37,6 @@
     <string name="empty_creditionals">Inputs should not be empty</string>
     <string name="invalid_creditionals">Invaild username or password</string>
     <string name="login_success">Hi %1$s… Welcome…</string>
+    <string name="menu_option_permit">Trucking permit</string>
+    <string name="menu_option_food_bank">Food bank</string>
 </resources>
