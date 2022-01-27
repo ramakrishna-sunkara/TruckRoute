@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ImageView
+        android:focusable="true"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Close"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/dismiss"
+        android:padding="14dp"
+        android:src="@drawable/ic_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/title"
+        app:layout_constraintTop_toTopOf="@id/dismiss"
+        app:layout_constraintBottom_toBottomOf="@id/dismiss"
+        app:layout_constraintLeft_toRightOf="@id/dismiss"
+        android:padding="14dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:text="Select operator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/dismiss"
+        android:background="#969696"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@id/dismiss"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        app:layout_constrainedHeight="true"
+        android:paddingTop="@dimen/spacing_normal"
+        android:paddingBottom="@dimen/spacing_normal"
+        tools:context=".fragments.OperatorListDialogFragment"
+        tools:listitem="@layout/fragment_operator_list_dialog_list_dialog_item" />
+</androidx.constraintlayout.widget.ConstraintLayout>

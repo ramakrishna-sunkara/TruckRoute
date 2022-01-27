@@ -10,6 +10,7 @@ import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -24,6 +25,8 @@ import com.tomtom.online.sdk.common.permission.AndroidPermissionChecker
 import com.tomtom.online.sdk.location.FusedLocationSource
 import com.tomtom.online.sdk.location.LocationSource
 import com.tomtom.online.sdk.location.LocationUpdateListener
+import com.tomtom.online.sdk.routing.data.VehicleLoadType
+import com.tomtom.online.sdk.routing.route.description.RouteType
 import com.tomtom.online.sdk.routing.route.description.TravelMode
 import com.tomtom.online.sdk.search.OnlineSearchApi
 import com.tomtom.online.sdk.search.SearchApi
@@ -39,7 +42,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import java.util.*
 
-class MainActivity : AppCompatActivity(), LocationUpdateListener {
+class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheetDialog.Listener {
 
     companion object {
         private const val PREPARATION_FIRST_OPT = 0
@@ -75,8 +78,12 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener {
     private var latLngDeparture = DEFAULT_DEPARTURE_LATLNG
     private var latLngDestination = DEFAULT_DESTINATION_LATLNG
     private var preparationTimeSelected = PREPARATION_FIRST_OPT
+    private var routeTypeSelected = RouteType.ECO
+    private var vehicleLoadTypeSelected = MyVehicleLoadType.US_Hazmat_Class_1
+    private var filterType = FilterType.NONE
+    private var vehicleLoadTypeSelectedString = MyVehicleLoadType.US_Hazmat_Class_1.name
 
-    private val userPreferredHourPattern: String
+        private val userPreferredHourPattern: String
         get() = if (DateFormat.is24HourFormat(applicationContext)) TIME_24H_FORMAT else TIME_12H_FORMAT
 
     private val currentTimeInMillis: Long
@@ -94,6 +101,18 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener {
         initWhereSection()
         initByWhenSection()
         initStartSection()
+    }
+
+    private fun openBottomSheet(filterType: FilterType, selectedValue: String) {
+        val bottomSheetDialog = AppBottomSheetDialog()
+        val args = Bundle();
+        args.putSerializable(Constants.EXTRA_FILTER_TYPE, filterType);
+        args.putString(Constants.EXTRA_SELECTED_VALUE, selectedValue)
+        bottomSheetDialog.arguments = args;
+        bottomSheetDialog.show(
+            supportFragmentManager,
+            AppBottomSheetDialog.TAG
+        )
     }
 
     override fun onResume() {
@@ -418,6 +437,19 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener {
             )
             startActivity(intent)
         }
+
+        txt_route_type.setOnClickListener {
+            filterType = FilterType.VEHICLE_ROUTE_TYPE
+            openBottomSheet(filterType, routeTypeSelected.name)
+        }
+        txt_vehicle_load_type.setOnClickListener {
+            filterType = FilterType.VEHICLE_LOAD_TYPE
+            openBottomSheet(filterType, vehicleLoadTypeSelected.toString())
+        }
+        txt_travel_mode.setOnClickListener {
+            filterType = FilterType.TRAVEL_MODE
+            openBottomSheet(filterType, travelModeSelected.name)
+        }
     }
 
     private fun textViewIsEmpty(textView: AutoCompleteTextView): Boolean {
@@ -460,5 +492,23 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener {
 
     private abstract inner class BaseTextWatcher : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+    }
+
+    override fun onFilterSelected(listValue: String) {
+        when(filterType){
+            FilterType.VEHICLE_ROUTE_TYPE -> {
+                routeTypeSelected = RouteType.valueOf(listValue)
+                txt_route_type.text = listValue
+            }
+            FilterType.TRAVEL_MODE -> {
+                travelModeSelected = TravelMode.valueOf(listValue)
+                txt_travel_mode.text = listValue
+            }
+            FilterType.VEHICLE_LOAD_TYPE -> {
+                vehicleLoadTypeSelected = MyVehicleLoadType.getLoadType(listValue)
+                txt_vehicle_load_type.text = listValue
+            }
+            FilterType.NONE -> {}
+        }
     }
 }

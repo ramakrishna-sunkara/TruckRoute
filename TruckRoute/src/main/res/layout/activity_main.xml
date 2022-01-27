@@ -188,8 +188,88 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_dropdown_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_main_settings_arrive_at">
 
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.50"/>
+                    <TextView
+                        android:id="@+id/txt_route_type_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/route_type"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_route_type"
+                        style="@style/style_spn_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/route_type"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/txt_route_type_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_travel_mode_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/travel_mode"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_route_type_label"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_travel_mode"
+                        style="@style/style_spn_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/travel_mode"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_travel_mode_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_vehicle_load_type_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vehicle_load_type"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_travel_mode_label"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_vehicle_load_type"
+                        style="@style/style_spn_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/vehicle_load_type"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_vehicle_load_type_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_main_start"

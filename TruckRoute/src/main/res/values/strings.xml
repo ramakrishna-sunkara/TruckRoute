@@ -39,4 +39,7 @@
     <string name="login_success">Hi %1$s… Welcome…</string>
     <string name="menu_option_permit">Trucking permit</string>
     <string name="menu_option_food_bank">Food bank</string>
+    <string name="route_type">Route Type</string>
+    <string name="travel_mode">Travel Mode</string>
+    <string name="vehicle_load_type">Vehicle Load Type</string>
 </resources>
