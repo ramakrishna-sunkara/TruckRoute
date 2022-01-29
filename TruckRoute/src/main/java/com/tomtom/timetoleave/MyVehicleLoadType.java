@@ -3,6 +3,7 @@ package com.tomtom.timetoleave;
 import java.util.Arrays;
 
 public enum MyVehicleLoadType {
+    NONE("None"),
     US_Hazmat_Class_1("Explosives"),
     US_Hazmat_Class_2("Compressed gas"),
     US_Hazmat_Class_3("Flammable liquids"),

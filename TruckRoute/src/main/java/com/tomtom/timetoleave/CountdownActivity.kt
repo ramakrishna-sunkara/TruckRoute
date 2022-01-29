@@ -15,17 +15,22 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.tomtom.online.sdk.common.location.LatLng
-import com.tomtom.online.sdk.common.util.DateFormatter
+import com.tomtom.online.sdk.location.LocationUpdateListener
 import com.tomtom.online.sdk.map.*
 import com.tomtom.online.sdk.routing.OnlineRoutingApi
 import com.tomtom.online.sdk.routing.RoutingApi
 import com.tomtom.online.sdk.routing.RoutingException
 import com.tomtom.online.sdk.routing.route.*
+import com.tomtom.online.sdk.routing.route.description.RouteType
 import com.tomtom.online.sdk.routing.route.description.TravelMode
+import com.tomtom.online.sdk.routing.route.vehicle.VehicleDimensions
+import com.tomtom.online.sdk.routing.route.vehicle.VehicleLoadType
+import com.tomtom.online.sdk.routing.route.vehicle.VehicleRestrictions
 import kotlinx.android.synthetic.main.activity_countdown.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
+
 
 class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -37,7 +42,15 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
         private const val BUNDLE_DESTINATION_LNG = "DESTINATION_LNG"
         private const val BUNDLE_BY_WHAT = "BY_WHAT"
         private const val BUNDLE_ARRIVE_AT = "ARRIVE_AT"
-        private const val BUNDLE_PREPARATION_TIME = "PREPARATION_TIME"
+        private const val BUNDLE_DEPART_AT = "DEPART_AT"
+
+        private const val BUNDLE_VEHICLE_LOAD_TYPE = "VEHICLE_LOAD_TYPE"
+        private const val BUNDLE_VEHICLE_WEIGHT = "VEHICLE_WEIGHT"
+        private const val BUNDLE_VEHICLE_HEIGHT = "VEHICLE_HEIGHT"
+        private const val BUNDLE_VEHICLE_LENGTH = "VEHICLE_LENGTH"
+        private const val BUNDLE_VEHICLE_WIDTH = "VEHICLE_WIDTH"
+        //private const val BUNDLE_PREPARATION_TIME = "PREPARATION_TIME"
+        private const val BUNDLE_ROUTE_TYPE = "ROUTE_TYPE"
         private const val COUNTDOWN_MODE_PREPARATION = "countdown_mode_preparation"
         private const val COUNTDOWN_MODE_FINISHED = "countdown_mode_finished"
         private const val ONE_MINUTE_IN_MILLIS = 60000
@@ -50,7 +63,13 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
             destination: LatLng,
             strByWhat: TravelMode,
             arriveAtMillis: Long,
-            preparationTime: Int
+            departureAtMillis: Long,
+            routeType: RouteType,
+            vehicleLoadTypeString: String,
+            vehicleWeight: Int,
+            vehicleHeight: Double,
+            vehicleLength: Double,
+            vehicleWidth: Double
         ): Intent {
             val settings = Bundle().apply {
                 this.putDouble(BUNDLE_DEPARTURE_LAT, departure.latitude)
@@ -59,7 +78,13 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
                 this.putDouble(BUNDLE_DESTINATION_LNG, destination.longitude)
                 this.putString(BUNDLE_BY_WHAT, strByWhat.toString())
                 this.putLong(BUNDLE_ARRIVE_AT, arriveAtMillis)
-                this.putInt(BUNDLE_PREPARATION_TIME, preparationTime)
+                this.putLong(BUNDLE_DEPART_AT, departureAtMillis)
+                this.putString(BUNDLE_ROUTE_TYPE, routeType.toString())
+                this.putString(BUNDLE_VEHICLE_LOAD_TYPE, vehicleLoadTypeString)
+                this.putInt(BUNDLE_VEHICLE_WEIGHT, vehicleWeight)
+                this.putDouble(BUNDLE_VEHICLE_HEIGHT, vehicleHeight)
+                this.putDouble(BUNDLE_VEHICLE_LENGTH, vehicleLength)
+                this.putDouble(BUNDLE_VEHICLE_WIDTH, vehicleWidth)
             }
             val intent = Intent(context, CountdownActivity::class.java)
             intent.putExtra(BUNDLE_SETTINGS, settings)
@@ -68,11 +93,18 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private var preparationTime: Int = 0
+    //private var preparationTime: Int = 0
     private var previousTravelTime: Int = 0
     private var isPreparationMode = false
     private var isInPauseMode = false
     private var arriveAt: Date? = null
+    private var departAt: Date? = null
+    private var vehicleLoadType: VehicleLoadType? = null
+    private var vehicleWeight: Int? = null
+    private var vehicleHeight: Double? = null
+    private var vehicleLength: Double? = null
+    private var vehicleWidth: Double? = null
+
     private lateinit var infoSnackbar: CustomSnackbar
     private lateinit var warningSnackbar: CustomSnackbar
     private lateinit var dialogInProgress: AlertDialog
@@ -81,14 +113,19 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var routingApi: RoutingApi
     private lateinit var departureIcon: Icon
     private lateinit var destinationIcon: Icon
+    private lateinit var navEnableIcon: Icon
+    private lateinit var navDisableIcon: Icon
     private var travelMode: TravelMode? = null
+    private var routeType: RouteType? = null
     private var destination: LatLng? = null
     private var departure: LatLng? = null
     private var countDownTimer: CountDownTimer? = null
     private val timerHandler = Handler()
+    private var isNavStarted = false
+    private lateinit var chevron: Chevron
 
     private val requestRouteRunnable =
-        Runnable { requestRoute(departure, destination, travelMode, arriveAt) }
+        Runnable { requestRoute(departure, destination, travelMode, routeType, arriveAt, departAt,vehicleLoadType, vehicleWeight, vehicleHeight, vehicleLength, vehicleWidth) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,8 +137,34 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
         initClickEvents()
     }
 
+    private val listener = LocationUpdateListener { location ->
+        chevron.position = ChevronPosition.Builder(location).build()
+        chevron.show()
+    }
+
     private fun initClickEvents() {
         imgBack.setOnClickListener { finish() }
+        imgNavigation.setOnClickListener {
+            if (isNavStarted){
+                stopNavigation()
+            }else {
+                startNavigation()
+            }
+        }
+    }
+
+    private fun startNavigation() {
+        Toast.makeText(this, R.string.navigation_started, Toast.LENGTH_SHORT)
+            .show()
+        imgNavigation.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_baseline_navigation_blue_24))
+        tomtomMap.drivingSettings.startTracking(chevron);
+    }
+
+    private fun stopNavigation() {
+        Toast.makeText(this, R.string.navigation_stoped, Toast.LENGTH_SHORT)
+            .show()
+        imgNavigation.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_baseline_navigation_24))
+        tomtomMap.drivingSettings.stopTracking();
     }
 
     override fun onPause() {
@@ -128,8 +191,11 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
             this.isMyLocationEnabled = true
             this.clear()
         }
+        val chevronBuilder = ChevronBuilder.create(navEnableIcon, navDisableIcon)
+        chevron = tomtomMap.drivingSettings.addChevron(chevronBuilder)
+        tomtomMap.addLocationUpdateListener(listener)
         showDialog(dialogInProgress)
-        requestRoute(departure, destination, travelMode, arriveAt)
+        requestRoute(departure, destination, travelMode, routeType, arriveAt, departAt, vehicleLoadType, vehicleWeight, vehicleHeight, vehicleLength, vehicleWidth)
     }
 
     override fun onRequestPermissionsResult(
@@ -145,22 +211,58 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
         departure: LatLng?,
         destination: LatLng?,
         byWhat: TravelMode?,
-        arriveAt: Date?
+        routeType: RouteType?,
+        arriveAt: Date?,
+        departAt: Date?,
+        vehicleLoadType: VehicleLoadType?,
+        vehicleWeight: Int?,
+        vehicleHeight: Double?,
+        vehicleLength: Double?,
+        vehicleWidth: Double?
     ) {
         if (!isInPauseMode) {
             val routeDescriptor = RouteDescriptor.Builder()
-                .routeType(com.tomtom.online.sdk.routing.route.description.RouteType.FASTEST)
                 .considerTraffic(true)
                 .travelMode(byWhat!!)
-                .build()
+                .routeType(routeType!!)
+
+            departAt?.let {
+                routeDescriptor.departAt(it)
+            }
 
             val routeCalculationDescriptor = RouteCalculationDescriptor.Builder()
-                .routeDescription(routeDescriptor)
+                .routeDescription(routeDescriptor.build())
                 .arriveAt(arriveAt!!)
+                .build()
+
+
+            val vehicleRestrictions = VehicleRestrictions.Builder()
+            vehicleLoadType?.let {
+                vehicleRestrictions.vehicleLoadType(it)
+            }
+
+            val vehicleDimensions = VehicleDimensions.Builder()
+            vehicleHeight?.let {
+                vehicleDimensions.vehicleHeightInMeters(it)
+            }
+            vehicleWeight?.let {
+                vehicleDimensions.vehicleWeightInKg(it)
+            }
+            vehicleLength?.let {
+                vehicleDimensions.vehicleLengthInMeters(it)
+            }
+            vehicleWidth?.let {
+                vehicleDimensions.vehicleWidthInMeters(it)
+            }
+
+            val combustionVehicleDescriptor = CombustionVehicleDescriptor.Builder()
+                .vehicleDimensions(vehicleDimensions.build())
+                .vehicleRestrictions(vehicleRestrictions.build())
                 .build()
 
             val routeSpecification = RouteSpecification.Builder(departure!!, destination!!)
                 .routeCalculationDescriptor(routeCalculationDescriptor)
+                .combustionVehicleDescriptor(combustionVehicleDescriptor)
                 .build()
 
             routingApi.planRoute(routeSpecification, object : RouteCallback {
@@ -177,11 +279,6 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
                             previousTravelTime = currentTravelTime
                             displayRouteOnMap(fullRoute.getCoordinates())
                             val departureTimeString = fullRoute.summary.departureTime
-                            setupCountDownTimer(
-                                DateFormatter().formatWithTimeZone(
-                                    departureTimeString
-                                ).toDate()
-                            )
                         } else {
                             infoSnackbar.show()
 
@@ -202,39 +299,6 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
                         Toast.LENGTH_LONG
                     ).show()
                     this@CountdownActivity.finish()
-                }
-
-                private fun setupCountDownTimer(departure: Date) {
-                    countDownTimer?.cancel()
-
-                    val now = Calendar.getInstance().time
-                    val preparationTimeMillis = preparationTime * ONE_MINUTE_IN_MILLIS
-                    val timeToLeave = departure.time - now.time
-                    countDownTimer =
-                        object : CountDownTimer(timeToLeave, ONE_SECOND_IN_MILLIS.toLong()) {
-                            override fun onTick(millisUntilFinished: Long) {
-                                updateCountdownTimerTextViews(millisUntilFinished)
-                                if (!isPreparationMode && millisUntilFinished <= preparationTimeMillis) {
-                                    isPreparationMode = true
-                                    setCountdownTimerColor(COUNTDOWN_MODE_PREPARATION)
-                                    if (!isInPauseMode) {
-                                        showPreparationInfoDialog()
-                                    }
-                                }
-                            }
-
-                            override fun onFinish() {
-                                timerHandler.removeCallbacks(requestRouteRunnable)
-                                setCountdownTimerColor(COUNTDOWN_MODE_FINISHED)
-                                if (!isInPauseMode) {
-                                    //createDialogWithCustomButtons()
-                                }
-                            }
-                        }.start()
-                    text_countdown_travel_time.text = getString(
-                        R.string.travel_time_text,
-                        formatTimeFromSecondsDisplayWithoutSeconds(previousTravelTime.toLong())
-                    )
                 }
 
                 private fun prepareWarningMessage(travelDifference: Int): String {
@@ -259,16 +323,6 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
                 ): String {
                     val prefix = if (travelDifference < 0) "-" else "+"
                     return prefix + travelTimeDifference
-                }
-
-                private fun showPreparationInfoDialog() {
-                    dialogInfo = createSimpleAlertDialog(
-                        getString(
-                            R.string.dialog_start_preparation_text,
-                            preparationTime
-                        )
-                    )
-                    showDialog(dialogInfo)
                 }
 
                 private fun createSimpleAlertDialog(message: String): AlertDialog {
@@ -386,11 +440,16 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
             Icon.Factory.fromResources(this@CountdownActivity, R.drawable.ic_map_route_departure)
         destinationIcon =
             Icon.Factory.fromResources(this@CountdownActivity, R.drawable.ic_map_route_destination)
+        navEnableIcon =
+            Icon.Factory.fromResources(this@CountdownActivity, R.drawable.navigation_enable_64)
+        navDisableIcon =
+            Icon.Factory.fromResources(this@CountdownActivity, R.drawable.navigate_disable_64)
 
         initBundleSettings(settings)
         img_countdown_by_what.setImageResource(getTravelModeIcon(travelMode!!))
-        text_countdown_preparation.text =
-            getString(R.string.preparation_indicator_info, preparationTime)
+        /*text_countdown_preparation.text =
+            getString(R.string.preparation_indicator_info, preparationTime)*/
+
         previousTravelTime = 0
 
         createWarningSnackBar()
@@ -404,6 +463,13 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
             val arriveAtMillis = settings.getLong(BUNDLE_ARRIVE_AT)
             calendar.timeInMillis = arriveAtMillis
             arriveAt = calendar.time
+
+            val departAtMillis = settings.getLong(BUNDLE_DEPART_AT, 0L)
+            if (departAtMillis != 0L) {
+                calendar.timeInMillis = departAtMillis
+                departAt = calendar.time
+            }
+
             departure = LatLng(
                 settings.getDouble(BUNDLE_DEPARTURE_LAT),
                 settings.getDouble(BUNDLE_DEPARTURE_LNG)
@@ -415,7 +481,35 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
             travelMode = TravelMode.valueOf(
                 settings.getString(BUNDLE_BY_WHAT)!!.toUpperCase(Locale.getDefault())
             )
-            preparationTime = settings.getInt(BUNDLE_PREPARATION_TIME)
+            routeType = RouteType.valueOf(
+                settings.getString(BUNDLE_ROUTE_TYPE)!!.toUpperCase(Locale.getDefault())
+            )
+            val vehicleTypeString = settings.getString(BUNDLE_VEHICLE_LOAD_TYPE)
+            vehicleTypeString?.let {
+                //Should not set any type if its none
+                if (vehicleTypeString != MyVehicleLoadType.NONE.name) {
+                    vehicleLoadType = VehicleLoadType.valueOf(
+                        it.toUpperCase(Locale.getDefault())
+                    )
+                }
+            }
+            val mVehicleHeight = settings.getDouble(BUNDLE_VEHICLE_HEIGHT, 0.0)
+            if (mVehicleHeight != 0.0){
+                vehicleHeight = mVehicleHeight
+            }
+            val mVehicleLength = settings.getDouble(BUNDLE_VEHICLE_LENGTH, 0.0)
+            if (mVehicleLength != 0.0){
+                vehicleLength = mVehicleLength
+            }
+            val mVehicleWidth = settings.getDouble(BUNDLE_VEHICLE_WIDTH, 0.0)
+            if (mVehicleWidth != 0.0){
+                vehicleWidth = mVehicleWidth
+            }
+            val mVehicleWeight = settings.getInt(BUNDLE_VEHICLE_WEIGHT, 0)
+            if (mVehicleWeight != 0){
+                vehicleWeight = mVehicleWeight
+            }
+            //preparationTime = settings.getInt(BUNDLE_PREPARATION_TIME)
         }
     }
 
@@ -483,5 +577,10 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun dialogIsShowing(dialog: Dialog?): Boolean {
         return dialog != null && dialog.isShowing
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        tomtomMap.removeLocationUpdateListener(listener)
     }
 }
