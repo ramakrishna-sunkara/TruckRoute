@@ -23,10 +23,13 @@ import com.tomtom.online.sdk.routing.RoutingException
 import com.tomtom.online.sdk.routing.route.*
 import com.tomtom.online.sdk.routing.route.description.RouteType
 import com.tomtom.online.sdk.routing.route.description.TravelMode
+import com.tomtom.online.sdk.routing.route.information.Instruction
 import com.tomtom.online.sdk.routing.route.vehicle.VehicleDimensions
 import com.tomtom.online.sdk.routing.route.vehicle.VehicleLoadType
 import com.tomtom.online.sdk.routing.route.vehicle.VehicleRestrictions
+import com.tomtom.timetoleave.maneuverslist.ManeuversListActivity
 import kotlinx.android.synthetic.main.activity_countdown.*
+import java.io.Serializable
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
@@ -123,6 +126,7 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
     private val timerHandler = Handler()
     private var isNavStarted = false
     private lateinit var chevron: Chevron
+    private lateinit var instructions: List<Instruction>
 
     private val requestRouteRunnable =
         Runnable { requestRoute(departure, destination, travelMode, routeType, arriveAt, departAt,vehicleLoadType, vehicleWeight, vehicleHeight, vehicleLength, vehicleWidth) }
@@ -151,6 +155,13 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
                 startNavigation()
             }
         }
+        imgManeuversList.setOnClickListener { showManeuversList() }
+    }
+
+    private fun showManeuversList(){
+        val intent = Intent(applicationContext, ManeuversListActivity::class.java)
+        intent.putExtra(Constants.EXTRA_INSTRUCTIONS, instructions as Serializable)
+        startActivity(intent)
     }
 
     private fun startNavigation() {
@@ -272,16 +283,16 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
                         val fullRoute = routePlan.routes.first()
                         val currentTravelTime = fullRoute.summary.travelTimeInSeconds
                         if (previousTravelTime != currentTravelTime) {
+                            saveManeuverList(fullRoute.guidance.instructions)
                             val travelDifference = previousTravelTime - currentTravelTime
                             if (previousTravelTime != 0) {
                                 showWarningSnackbar(prepareWarningMessage(travelDifference))
                             }
                             previousTravelTime = currentTravelTime
                             displayRouteOnMap(fullRoute.getCoordinates())
-                            val departureTimeString = fullRoute.summary.departureTime
+                            //val departureTimeString = fullRoute.summary.departureTime
                         } else {
                             infoSnackbar.show()
-
                         }
                     }
                     timerHandler.removeCallbacks(requestRouteRunnable)
@@ -412,6 +423,10 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
             timerHandler.removeCallbacks(requestRouteRunnable)
             timerHandler.postDelayed(requestRouteRunnable, ROUTE_RECALCULATION_DELAY.toLong())
         }
+    }
+
+    private fun saveManeuverList(instructions: List<Instruction>) {
+        this.instructions = instructions
     }
 
     private fun initTomTomServices() {

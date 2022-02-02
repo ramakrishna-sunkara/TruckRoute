@@ -68,4 +68,9 @@
     <string name="chevron_tracking_start">chevron_tracking_start</string>
     <string name="chevron_tracking_stop">chevron_tracking_stop</string>
     <string name="matching_description">matching_description</string>
+
+    <string name="distance_km">%1$d km</string>
+    <string name="distance_m">%1$d m</string>
+    <string name="list_empty">List empty. Please try again</string>
+
 </resources>
