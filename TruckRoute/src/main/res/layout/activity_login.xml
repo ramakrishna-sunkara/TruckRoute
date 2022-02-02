@@ -26,23 +26,25 @@
 
     <EditText
         android:id="@+id/edtUserName"
-        style="@style/style_edit_text"
+        style="@style/style_edit_text_big"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/user_name"
         android:importantForAutofill="no"
         android:inputType="text"
+        android:text="admin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtLoginTitle" />
 
     <EditText
         android:id="@+id/edtPassword"
-        style="@style/style_edit_text"
+        style="@style/style_edit_text_big"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
+        android:text="admin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtUserName" />
 

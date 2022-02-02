@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Truck Route</string>
+    <string name="app_name">ECOway 2.0</string>
     <string name="main_arrive_at">ARRIVE AT</string>
     <string name="main_current_position">- Your location -</string>
     <string name="preparation_default_value">PREP 0 MIN</string>
@@ -42,4 +42,30 @@
     <string name="route_type">Route Type</string>
     <string name="travel_mode">Travel Mode</string>
     <string name="vehicle_load_type">Vehicle Load Type</string>
+    <string name="weight">Weight</string>
+    <string name="weight_kgs">Weight (kgs)</string>
+    <string name="length">Length</string>
+    <string name="length_meters">Length (meters)</string>
+    <string name="height">Height</string>
+    <string name="height_meters">Height (meters)</string>
+    <string name="width">Width</string>
+    <string name="width_meters">Width (meters)</string>
+    <string name="arrive_at">Arrive At</string>
+    <string name="depart_at">Depart At</string>
+    <string name="feedback_email">fllteamwarriors@gmail.com</string>
+    <string name="select_from_location">Please select from location</string>
+    <string name="select_to_location">Please select to location</string>
+    <string name="type_location">Type location</string>
+    <string name="enter_location">Enter location</string>
+    <string name="navigation_stoped">Navigation stoped...</string>
+    <string name="navigation_started">Navigation started...</string>
+    <string name="map_matching">Map matching</string>
+    <string name="map_matching_subtitle">GPS matched to the given route</string>
+    <string name="route_matching">route_matching</string>
+    <string name="route_matching_subtitle">route_matching_subtitle</string>
+    <string name="chevron_tracking">chevron_tracking</string>
+    <string name="chevron_tracking_subtitle">chevron_tracking_subtitle</string>
+    <string name="chevron_tracking_start">chevron_tracking_start</string>
+    <string name="chevron_tracking_stop">chevron_tracking_stop</string>
+    <string name="matching_description">matching_description</string>
 </resources>

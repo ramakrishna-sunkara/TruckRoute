@@ -40,6 +40,7 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheetDialog.Listener {
@@ -62,9 +63,9 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
         const val MENU_FOOD_BANK = "food"
     }
 
-    var calArriveAt: Calendar = Calendar.getInstance().apply {
+    /*var calArriveAt: Calendar = Calendar.getInstance().apply {
         this.add(Calendar.HOUR, ARRIVE_TIME_AHEAD_HOURS)
-    }
+    }*/
     private lateinit var searchApi: SearchApi
     private lateinit var locationSource: LocationSource
     private lateinit var searchAdapter: ArrayAdapter<String>
@@ -73,15 +74,15 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
     private val searchTimerHandler = Handler()
     private var searchRunnable: Runnable? = null
     private var travelModeSelected = TravelMode.TRUCK
-    private var arrivalTimeInMillis: Long = 0
+    private var arrivalCalender: Calendar = Calendar.getInstance(Locale.getDefault())
+    private var departCalender: Calendar? = null
     private var latLngCurrentPosition: LatLng? = null
     private var latLngDeparture = DEFAULT_DEPARTURE_LATLNG
     private var latLngDestination = DEFAULT_DESTINATION_LATLNG
     private var preparationTimeSelected = PREPARATION_FIRST_OPT
     private var routeTypeSelected = RouteType.ECO
-    private var vehicleLoadTypeSelected = MyVehicleLoadType.US_Hazmat_Class_1
+    private var vehicleLoadTypeSelected = MyVehicleLoadType.NONE
     private var filterType = FilterType.NONE
-    private var vehicleLoadTypeSelectedString = MyVehicleLoadType.US_Hazmat_Class_1.name
 
         private val userPreferredHourPattern: String
         get() = if (DateFormat.is24HourFormat(applicationContext)) TIME_24H_FORMAT else TIME_12H_FORMAT
@@ -99,8 +100,17 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
         initToolbarSettings()
         initSearchFieldsWithDefaultValues()
         initWhereSection()
-        initByWhenSection()
+        //initByWhenSection()
+        initData();
         initStartSection()
+    }
+
+    private fun initData() {
+        txt_route_type.text = routeTypeSelected.toString()
+        txt_travel_mode.text = travelModeSelected.toString()
+        txt_vehicle_load_type.text = vehicleLoadTypeSelected.toString()
+        val sdf = SimpleDateFormat(DateTimePicker.getFormat("dt"), Locale.getDefault())
+        txt_arrive_at.text = sdf.format(arrivalCalender.time)
     }
 
     private fun openBottomSheet(filterType: FilterType, selectedValue: String) {
@@ -117,7 +127,7 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
 
     override fun onResume() {
         super.onResume()
-        resetDaysInArriveAt()
+        //resetDaysInArriveAt()
         val checker = AndroidPermissionChecker.createLocationChecker(this)
         if (!checker.ifNotAllPermissionGranted()) {
             locationSource.activate()
@@ -378,27 +388,27 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
         }
     }
 
-    private fun initByWhenSection() {
+    /*private fun initByWhenSection() {
         setTimerDisplay()
         text_view_main_arrive_at_hour.setOnClickListener {
             TimePickerFragment().apply {
                 this.show(supportFragmentManager, TIME_PICKER_DIALOG_TAG)
             }
         }
-    }
+    }*/
 
 
     fun setTimerDisplay() {
-        val tvArriveAtHourString =
+        /*val tvArriveAtHourString =
             DateFormat.format(userPreferredHourPattern, calArriveAt.timeInMillis) as String
         text_view_main_arrive_at_hour.text = tvArriveAtHourString
         setTvArriveAtAmPm(
             DateFormat.is24HourFormat(applicationContext),
             calArriveAt.get(Calendar.AM_PM)
-        )
+        )*/
     }
 
-    private fun setTvArriveAtAmPm(is24HourFormat: Boolean, indicator: Int) {
+    /*private fun setTvArriveAtAmPm(is24HourFormat: Boolean, indicator: Int) {
         if (is24HourFormat) {
             text_view_main_arrive_at_am_pm.visibility = View.INVISIBLE
         } else {
@@ -407,7 +417,7 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
                 if (indicator == Calendar.AM) getString(R.string.main_am_value) else getString(R.string.main_pm_value)
             text_view_main_arrive_at_am_pm.text = strAmPm
         }
-    }
+    }*/
 
     private fun selectPreparationButton(preparationButton: View) {
         preparationButton.isSelected = true
@@ -417,23 +427,32 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
 
     private fun initStartSection() {
         button_main_start.setOnClickListener {
-            val currentTimeInMillis = currentTimeInMillis
-            arrivalTimeInMillis = getArrivalTimeInMillis()
+            //val currentTimeInMillis = currentTimeInMillis
+            //arrivalTimeInMillis = getArrivalTimeInMillis()
 
             if (departureFiledIsEmpty()) {
                 //initDepartureWithDefaultValue()
+                Toast.makeText(applicationContext, R.string.select_from_location, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             } else if (destinationFieldIsEmpty()) {
                 //initDestinationWithDefaultValue()
+                Toast.makeText(applicationContext, R.string.select_to_location, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-            if (currentTimeInMillis >= arrivalTimeInMillis) {
+            /*if (currentTimeInMillis >= arrivalTimeInMillis) {
                 calArriveAt.add(Calendar.DAY_OF_MONTH, 1)
                 arrivalTimeInMillis = getArrivalTimeInMillis()
-            }
+            }*/
 
             val intent = CountdownActivity.prepareIntent(
                 this@MainActivity, latLngDeparture, latLngDestination,
-                travelModeSelected, arrivalTimeInMillis, preparationTimeSelected
+                travelModeSelected, arrivalCalender.timeInMillis,
+                if(departCalender != null) departCalender!!.timeInMillis else 0L, routeTypeSelected, vehicleLoadTypeSelected.name,
+                vehicleWeight = if(edt_vehicle_weight.text.toString().isEmpty()) 0 else edt_vehicle_weight.text.toString().toInt(),
+                vehicleHeight = if(edt_vehicle_height.text.toString().isEmpty()) 0.0 else edt_vehicle_height.text.toString().toDouble(),
+                vehicleLength = if(edt_vehicle_length.text.toString().isEmpty()) 0.0 else edt_vehicle_length.text.toString().toDouble(),
+                vehicleWidth = if(edt_vehicle_width.text.toString().isEmpty()) 0.0 else edt_vehicle_width.text.toString().toDouble()
             )
             startActivity(intent)
         }
@@ -450,6 +469,23 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
             filterType = FilterType.TRAVEL_MODE
             openBottomSheet(filterType, travelModeSelected.name)
         }
+        txt_arrive_at.setOnClickListener {
+            DateTimePicker(this, true){
+                val sdf = SimpleDateFormat(DateTimePicker.getFormat("dt"), Locale.getDefault())
+                txt_arrive_at.text = sdf.format(it.calendar.time)
+                arrivalCalender = it.calendar
+                // reset depart date when selecting arrive date
+                departCalender = null
+                txt_depart_at.text = ""
+            }.show()
+        }
+        txt_depart_at.setOnClickListener {
+            DateTimePicker(this, true, arrivalCalender){
+                val sdf = SimpleDateFormat(DateTimePicker.getFormat("dt"), Locale.getDefault())
+                txt_depart_at.text = sdf.format(it.calendar.time)
+                departCalender = it.calendar
+            }.show()
+        }
     }
 
     private fun textViewIsEmpty(textView: AutoCompleteTextView): Boolean {
@@ -464,14 +500,14 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
         return textViewIsEmpty(atv_main_destination_location)
     }
 
-    private fun getArrivalTimeInMillis(): Long {
+    /*private fun getArrivalTimeInMillis(): Long {
         return calArriveAt.timeInMillis
     }
 
     private fun resetDaysInArriveAt() {
         val calendar = Calendar.getInstance()
         calArriveAt.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH))
-    }
+    }*/
 
     private fun hideKeyboard(view: View) {
         val inputMethodManager =
@@ -503,6 +539,7 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
             FilterType.TRAVEL_MODE -> {
                 travelModeSelected = TravelMode.valueOf(listValue)
                 txt_travel_mode.text = listValue
+                resetVehicleDimens()
             }
             FilterType.VEHICLE_LOAD_TYPE -> {
                 vehicleLoadTypeSelected = MyVehicleLoadType.getLoadType(listValue)
@@ -510,5 +547,12 @@ class MainActivity : AppCompatActivity(), LocationUpdateListener, AppBottomSheet
             }
             FilterType.NONE -> {}
         }
+    }
+
+    private fun resetVehicleDimens() {
+        edt_vehicle_height.setText("")
+        edt_vehicle_length.setText("")
+        edt_vehicle_weight.setText("")
+        edt_vehicle_width.setText("")
     }
 }

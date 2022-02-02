@@ -37,6 +37,13 @@ dependencies {
     implementation 'com.tomtom.online:sdk-maps:2.4782'
     implementation 'com.tomtom.online:sdk-search:2.4782'
     implementation 'com.tomtom.online:sdk-routing:2.4782'
+    implementation("com.tomtom.online:sdk-routing-rxjava2:2.4782")
+    implementation("com.tomtom.online:sdk-maps-rx-extensions:2.4782")
+    implementation("com.tomtom.online:sdk-maps-ui-extensions:2.4782")
+    implementation("com.tomtom.online:sdk-maps-static-image:2.4782")
+    implementation("com.tomtom.online:sdk-maps-driving-extensions:2.4782")
+    implementation("com.tomtom.online:sdk-geofencing:2.4782")
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
