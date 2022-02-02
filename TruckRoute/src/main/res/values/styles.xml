@@ -8,6 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ControlButton" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">@dimen/control_button_width</item>
+        <item name="android:layout_height">@dimen/control_button_height</item>
+        <item name="android:layout_margin">@dimen/control_button_margin</item>
+        <item name="android:background">@drawable/action_button</item>
+        <item name="android:textColor">@drawable/action_button_text_color</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
     <style name="style_countdown_settings" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/gotham_bold</item>
         <item name="android:textSize">12sp</item>

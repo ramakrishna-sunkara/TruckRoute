@@ -59,4 +59,13 @@
     <string name="enter_location">Enter location</string>
     <string name="navigation_stoped">Navigation stoped...</string>
     <string name="navigation_started">Navigation started...</string>
+    <string name="map_matching">Map matching</string>
+    <string name="map_matching_subtitle">GPS matched to the given route</string>
+    <string name="route_matching">route_matching</string>
+    <string name="route_matching_subtitle">route_matching_subtitle</string>
+    <string name="chevron_tracking">chevron_tracking</string>
+    <string name="chevron_tracking_subtitle">chevron_tracking_subtitle</string>
+    <string name="chevron_tracking_start">chevron_tracking_start</string>
+    <string name="chevron_tracking_stop">chevron_tracking_stop</string>
+    <string name="matching_description">matching_description</string>
 </resources>
