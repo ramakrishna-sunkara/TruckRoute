@@ -21,8 +21,10 @@ import com.tomtom.online.sdk.routing.OnlineRoutingApi
 import com.tomtom.online.sdk.routing.RoutingApi
 import com.tomtom.online.sdk.routing.RoutingException
 import com.tomtom.online.sdk.routing.route.*
+import com.tomtom.online.sdk.routing.route.calculation.InstructionsType
 import com.tomtom.online.sdk.routing.route.description.RouteType
 import com.tomtom.online.sdk.routing.route.description.TravelMode
+import com.tomtom.online.sdk.routing.route.diagnostic.ReportType
 import com.tomtom.online.sdk.routing.route.information.Instruction
 import com.tomtom.online.sdk.routing.route.vehicle.VehicleDimensions
 import com.tomtom.online.sdk.routing.route.vehicle.VehicleLoadType
@@ -244,6 +246,9 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
             val routeCalculationDescriptor = RouteCalculationDescriptor.Builder()
                 .routeDescription(routeDescriptor.build())
                 .arriveAt(arriveAt!!)
+                .reportType(ReportType.NONE)
+                .instructionType(InstructionsType.TEXT)
+                .language("en-GB")
                 .build()
 
 
@@ -275,6 +280,21 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
                 .routeCalculationDescriptor(routeCalculationDescriptor)
                 .combustionVehicleDescriptor(combustionVehicleDescriptor)
                 .build()
+
+            /*val routeDescriptor: RouteDescriptor = RouteDescriptor.Builder()
+                .considerTraffic(false)
+                .build()
+
+            val routeCalculationDescriptor: RouteCalculationDescriptor = RouteCalculationDescriptor.Builder()
+                .routeDescription(routeDescriptor)
+                .reportType(ReportType.NONE)
+                .instructionType(InstructionsType.TEXT)
+                .language("en-GB")
+                .build()
+
+            val routeSpecification = RouteSpecification.Builder(departure!!, destination!!)
+                .routeCalculationDescriptor(routeCalculationDescriptor)
+                .build()*/
 
             routingApi.planRoute(routeSpecification, object : RouteCallback {
                 override fun onSuccess(routePlan: RoutePlan) {
