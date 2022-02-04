@@ -15,7 +15,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-    <com.tomtom.timetoleave.driving.views.InfoBarView
+    <com.truckroute.ecoway.driving.views.InfoBarView
         android:id="@+id/infoBarView"
         layout="@layout/info_bar_view"
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         android:layout_gravity="top"
         android:visibility="gone" />
 
-    <com.tomtom.timetoleave.driving.views.OptionsButtonsView
+    <com.truckroute.ecoway.driving.views.OptionsButtonsView
         android:id="@+id/optionsButtons"
         android:layout_width="match_parent"
         android:layout_height="@dimen/control_bottom_panel_height"
