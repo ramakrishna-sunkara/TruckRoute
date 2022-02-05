@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/gra_white"
+    android:elevation="4dp"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_xxlarge">
+
+    <ImageView
+        android:id="@+id/imgProfileIcon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_baseline_person_24" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_toEndOf="@+id/imgProfileIcon"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtWelcome"
+            style="@style/style_label_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtMessage"
+            style="@style/style_label_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Happy to help you!" />
+
+    </LinearLayout>
+
+</RelativeLayout>

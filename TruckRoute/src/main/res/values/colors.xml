@@ -2,10 +2,11 @@
 <resources>
     <color name="colorPrimary">#555555</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#BDD731</color>
+    <color name="colorAccent">#2da5de</color>
+    <color name="colorAccentSecond">#e424d3d6</color>
 
-    <color name="color_light_green">#BDD731</color>
-    <color name="color_green_focused">#A2BA24</color>
+    <color name="color_light_green">#CD36A8DF</color>
+    <color name="color_green_focused">#1E88E5</color>
     <color name="color_green_selected">#333</color>
 
     <color name="color_border_grey">#313131</color>
@@ -19,8 +20,8 @@
     <color name="color_countdown_mode_preparation">#FCC56E</color>
     <color name="color_countdown_mode_finished">#FC846E</color>
 
-    <color name="color_snackbar_info_background">#6EC2FC</color>
-    <color name="color_snackbar_warning_background">#FCC56E</color>
+    <color name="color_snackbar_info_background">@color/colorAccent</color>
+    <color name="color_snackbar_warning_background">#E85C83</color>
 
     <color name="forest">#7aa920</color>
     <color name="tt_green">#bdd731</color>
@@ -33,4 +34,6 @@
     <color name="dark_grey">#262626</color>
     <color name="dark_blue">#27586B</color>
     <color name="list_space_color">#f2f2f2</color>
+    <color name="menu_checked">#c6c6c6</color>
+    <color name="menu_icon_select">#18d1d7</color>
 </resources>

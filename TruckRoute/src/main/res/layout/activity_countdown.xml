@@ -109,7 +109,7 @@
         android:layout_width="@dimen/size_none"
         android:layout_height="@dimen/size_none"
         android:layout_marginTop="@dimen/size_none"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/llBottomOptions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_countdown_timer"/>
@@ -141,8 +141,41 @@
         android:layout_height="@dimen/app_icon_size"
         android:src="@drawable/ic_baseline_navigation_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/llBottomOptions"
         android:layout_margin="@dimen/spacing_large"
         app:tint="@color/color_green_focused"/>
+
+    <LinearLayout
+        android:id="@+id/llBottomOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <Button
+            android:id="@+id/btnEcho"
+            style="@style/style_app_button_small"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/app_button_height_small"
+            android:text="@string/echo" />
+        <Button
+            android:id="@+id/btnFastest"
+            style="@style/style_app_button_small"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_height="@dimen/app_button_height_small"
+            android:text="@string/fastest" />
+        <Button
+            android:id="@+id/btnShortest"
+            style="@style/style_app_button_small"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_height="@dimen/app_button_height_small"
+            android:text="@string/shortest" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

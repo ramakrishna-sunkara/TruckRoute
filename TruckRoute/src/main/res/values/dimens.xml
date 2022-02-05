@@ -30,6 +30,7 @@
     <dimen name="main_locations_layout_elevation">4dp</dimen>
     <dimen name="main_autocomplete_input_height">40dp</dimen>
     <dimen name="app_button_height">48dp</dimen>
+    <dimen name="app_button_radius">24dp</dimen>
 
     <dimen name="countdown_by_what_height">38dp</dimen>
     <dimen name="countdown_by_what_width">46dp</dimen>
@@ -100,4 +101,11 @@
     <dimen name="mini_map_size">150dp</dimen>
     <dimen name="mini_map_border">2dp</dimen>
     <dimen name="mini_map_margin">10dp</dimen>
+    <!-- Default Navigation Drawer. -->
+    <dimen name="nav_drawer_width">264dp</dimen>
+    <dimen name="floating_height">650dp</dimen>
+    <dimen name="floating_width">500dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="app_button_height_small">40dp</dimen>
+    <dimen name="app_button_radius_small">20dp</dimen>
 </resources>

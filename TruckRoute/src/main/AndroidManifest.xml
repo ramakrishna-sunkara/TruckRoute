@@ -45,6 +45,9 @@
             android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"/>
         <activity
+            android:name=".ui.HomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".WebViewActivity"
             android:exported="true" />
 

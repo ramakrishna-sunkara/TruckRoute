@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.truckroute.ecoway.ui.HomeActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -26,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         } else {
             if ((userName == USER_ADMIN && password == USER_ADMIN) || (userName == USER_TEST && password == USER_TEST) ){
                 Toast.makeText(applicationContext, getString(R.string.login_success, userName), Toast.LENGTH_SHORT).show()
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }else{

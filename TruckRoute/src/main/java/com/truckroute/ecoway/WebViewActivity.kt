@@ -5,7 +5,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import com.truckroute.ecoway.MainActivity.Companion.MENU_PERMIT
+import com.truckroute.ecoway.Constants.*
 import kotlinx.android.synthetic.main.activity_webview.*
 
 
@@ -18,12 +18,10 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     private fun setUpWebView(pageType: String?) {
-        val permitUrl = "https://coast2coasttruckingpermits.com/state-regulations/"
-        val foodBankUrl = "https://www.feedingamerica.org/find-your-local-foodbank"
         val webViewSetting: WebSettings = webView.settings
         webViewSetting.javaScriptEnabled = true
         webView.webViewClient = AppWebViewClient()
-        webView.loadUrl(if (pageType == MENU_PERMIT) permitUrl else foodBankUrl)
+        webView.loadUrl(if (pageType == MENU_PERMIT) PERMIT_URL else FOOD_BANK_URL)
     }
 
     private class AppWebViewClient : WebViewClient() {
