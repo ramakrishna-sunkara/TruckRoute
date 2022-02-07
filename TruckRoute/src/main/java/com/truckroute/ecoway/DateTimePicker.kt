@@ -16,7 +16,7 @@ class DateTimePicker(
         @JvmStatic
         fun getFormat(format: String): String {
             when (format) {
-                "d" -> return "dd/MM/yyyy"
+                "d" -> return "MM/dd/yyyy"
                 "t" -> return "HH:mm"
                 "dt" -> return "dd/MM/yyyy hh:mm a"
             }

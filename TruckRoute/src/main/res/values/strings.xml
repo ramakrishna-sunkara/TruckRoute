@@ -29,7 +29,7 @@
     <string name="shared_preference_first_run">isFirstRun</string>
     <string name="location_permissions_denied">Location permissions request has been denied.</string>
     <string name="about_app">This app is to find route between two locations. and will give suggestions based on time and route</string>
-    <string name="about_title">About Truck Route</string>
+    <string name="about_title">@string/app_name</string>
     <string name="user_name">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -70,7 +70,8 @@
     <string name="matching_description">matching_description</string>
 
     <string name="distance_km">%1$d km</string>
-    <string name="distance_m">%1$d m</string>
+    <string name="distance_miles">%1$.2f miles</string>
+    <string name="distance_m">%1$f m</string>
     <string name="list_empty">List empty. Please try again</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -117,5 +118,13 @@
     <string name="fastest">Fastest</string>
     <string name="shortest">Shortest</string>
     <string name="welcome">Welcome</string>
+    <string name="maneuvers_list">Maneuvers List</string>
+
+    <string name="rating_icons_title">Please rate your experience with the app</string>
+    <string name="rating_comments_title">Comments</string>
+    <string name="rating_email_title">Enter your email for us to get back to you</string>
+    <string name="rating_submit">Submit Feedback</string>
+    <string name="thank_you_title">Thank you for your feedback...</string>
+    <string name="back">Back</string>
 
 </resources>

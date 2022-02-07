@@ -7,15 +7,13 @@
     android:background="@drawable/background_elevation_main"
     tools:context=".LoginActivity">
 
-    <ImageView
-        android:id="@+id/imgBack"
-        android:layout_width="@dimen/app_icon_size"
-        android:layout_height="@dimen/app_icon_size"
-        android:src="@drawable/ic_baseline_arrow_back_24"
-        android:layout_margin="@dimen/spacing_normal"
-        app:tint="@color/color_green_focused"
+    <include
+        android:id="@+id/include_tool_bar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvManeuversList"
@@ -24,7 +22,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/spacing_normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgBack"/>
+        app:layout_constraintTop_toBottomOf="@+id/include_tool_bar"/>
 
     <TextView
         android:id="@+id/txtEmptyList"

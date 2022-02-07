@@ -113,8 +113,8 @@ class HomeFragment : Fragment(), LocationUpdateListener, AppBottomSheetDialog.Li
         txt_route_type.text = routeTypeSelected.toString()
         txt_travel_mode.text = travelModeSelected.toString()
         txt_vehicle_load_type.text = vehicleLoadTypeSelected.toString()
-        val sdf = SimpleDateFormat(DateTimePicker.getFormat("dt"), Locale.getDefault())
-        txt_arrive_at.text = sdf.format(arrivalCalender.time)
+        //val sdf = SimpleDateFormat(DateTimePicker.getFormat("d"), Locale.getDefault())
+        //txt_arrive_at.text = sdf.format(arrivalCalender.time)
     }
 
     private fun openBottomSheet(filterType: FilterType, selectedValue: String) {
@@ -141,6 +141,7 @@ class HomeFragment : Fragment(), LocationUpdateListener, AppBottomSheetDialog.Li
     override fun onLocationChanged(location: Location) {
         if (latLngCurrentPosition == null) {
             latLngCurrentPosition = LatLng(location)
+            //initDepartureWithDefaultValue()
             locationSource.deactivate()
         }
     }
@@ -191,8 +192,14 @@ class HomeFragment : Fragment(), LocationUpdateListener, AppBottomSheetDialog.Li
     }
 
     private fun initDepartureWithDefaultValue() {
-        latLngDeparture = DEFAULT_DEPARTURE_LATLNG
-        setAddressForLocation(latLngDeparture, atv_main_departure_location)
+        //latLngDeparture = DEFAULT_DEPARTURE_LATLNG
+        //setAddressForLocation(latLngCurrentPosition!!, atv_main_departure_location)
+        if (latLngCurrentPosition != null) {
+            val currentLocationTitle = getString(R.string.main_current_position)
+            searchAutocompleteList.add(currentLocationTitle)
+            searchResultsMap[currentLocationTitle] = latLngCurrentPosition!!
+            atv_main_departure_location.listSelection = 0;
+        }
     }
 
     private fun initDestinationWithDefaultValue() {
@@ -379,7 +386,7 @@ class HomeFragment : Fragment(), LocationUpdateListener, AppBottomSheetDialog.Li
                 latLngDeparture,
                 latLngDestination,
                 travelModeSelected,
-                arrivalCalender.timeInMillis,
+                if (arrivalCalender != null) arrivalCalender!!.timeInMillis else 0L,
                 if (departCalender != null) departCalender!!.timeInMillis else 0L,
                 routeTypeSelected,
                 vehicleLoadTypeSelected.name,
@@ -413,7 +420,7 @@ class HomeFragment : Fragment(), LocationUpdateListener, AppBottomSheetDialog.Li
         }
         txt_arrive_at.setOnClickListener {
             DateTimePicker(requireContext(), true) {
-                val sdf = SimpleDateFormat(DateTimePicker.getFormat("dt"), Locale.getDefault())
+                val sdf = SimpleDateFormat(DateTimePicker.getFormat("d"), Locale.getDefault())
                 txt_arrive_at.text = sdf.format(it.calendar.time)
                 arrivalCalender = it.calendar
                 // reset depart date when selecting arrive date
@@ -422,8 +429,8 @@ class HomeFragment : Fragment(), LocationUpdateListener, AppBottomSheetDialog.Li
             }.show()
         }
         txt_depart_at.setOnClickListener {
-            DateTimePicker(requireContext(), true, arrivalCalender) {
-                val sdf = SimpleDateFormat(DateTimePicker.getFormat("dt"), Locale.getDefault())
+            DateTimePicker(requireContext(), true) {
+                val sdf = SimpleDateFormat(DateTimePicker.getFormat("d"), Locale.getDefault())
                 txt_depart_at.text = sdf.format(it.calendar.time)
                 departCalender = it.calendar
             }.show()

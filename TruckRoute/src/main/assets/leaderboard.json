@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Eva",
+    "points": 1950,
+    "position": 1,
+    "earned": 4
+  },
+  {
+    "name": "Dev",
+    "points": 1800,
+    "position": 2,
+    "earned": 2
+  },
+  {
+    "name": "Dani",
+    "points": 1720,
+    "position": 3,
+    "earned": 3
+  },
+  {
+    "name": "Jhon",
+    "points": 1500,
+    "position": 4,
+    "earned": 1
+  },
+  {
+    "name": "Nayan",
+    "points": 1000,
+    "position": 5,
+    "earned": 2
+  }
+]

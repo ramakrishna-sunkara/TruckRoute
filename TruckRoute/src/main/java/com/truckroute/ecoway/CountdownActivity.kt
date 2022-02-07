@@ -393,11 +393,15 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
 
             val routeCalculationDescriptor = RouteCalculationDescriptor.Builder()
                 .routeDescription(routeDescriptor.build())
-                .arriveAt(arriveAt!!)
                 .reportType(ReportType.NONE)
                 .instructionType(InstructionsType.TEXT)
                 .language("en-GB")
-                .build()
+
+            if (arriveAt == null){
+                routeCalculationDescriptor.arriveAt(Calendar.getInstance().time)
+            }else{
+                routeCalculationDescriptor.arriveAt(arriveAt)
+            }
 
             val vehicleRestrictions = VehicleRestrictions.Builder()
             vehicleLoadType?.let {
@@ -423,7 +427,7 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
                 .build()
 
             routeSpecification = RouteSpecification.Builder(departure!!, destination!!)
-                .routeCalculationDescriptor(routeCalculationDescriptor)
+                .routeCalculationDescriptor(routeCalculationDescriptor.build())
                 .combustionVehicleDescriptor(combustionVehicleDescriptor)
                 .build()
 

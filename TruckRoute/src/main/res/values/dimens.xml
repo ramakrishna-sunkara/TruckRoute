@@ -108,4 +108,7 @@
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="app_button_height_small">40dp</dimen>
     <dimen name="app_button_radius_small">20dp</dimen>
+    <dimen name="position_icon_size">48dp</dimen>
+    <dimen name="profile_icon_size">48dp</dimen>
+    <dimen name="comments_height">120dp</dimen>
 </resources>

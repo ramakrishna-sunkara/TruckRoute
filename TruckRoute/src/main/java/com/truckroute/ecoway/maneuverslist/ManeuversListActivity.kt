@@ -3,16 +3,13 @@ package com.truckroute.ecoway.maneuverslist
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import com.tomtom.online.sdk.routing.route.information.Instruction
 import com.truckroute.ecoway.Constants
 import com.truckroute.ecoway.R
 import com.truckroute.ecoway.adapaters.ManeuversListAdapter
-import com.truckroute.ecoway.driving.tracking.ChevronTrackingFragment
-import kotlinx.android.synthetic.main.activity_countdown.*
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_maneuvers_list.*
-import kotlinx.android.synthetic.main.activity_maneuvers_list.imgBack
+import kotlinx.android.synthetic.main.toolbar.*
 
 class ManeuversListActivity : AppCompatActivity() {
 
@@ -27,11 +24,15 @@ class ManeuversListActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        imgBack.setOnClickListener { finish() }
-        if (instructions.isEmpty()){
+        toolBar.title = getString(R.string.maneuvers_list)
+        setSupportActionBar(toolBar)
+        toolBar.navigationIcon =
+            ContextCompat.getDrawable(applicationContext, R.drawable.ic_baseline_arrow_back_24)
+        toolBar.setNavigationOnClickListener { finish() }
+        if (instructions.isEmpty()) {
             txtEmptyList.visibility = View.VISIBLE
             rvManeuversList.visibility = View.GONE
-        }else {
+        } else {
             txtEmptyList.visibility = View.GONE
             rvManeuversList.visibility = View.VISIBLE
             maneuversListAdapter = ManeuversListAdapter(instructions)
@@ -42,6 +43,7 @@ class ManeuversListActivity : AppCompatActivity() {
     private fun readArgs() {
         if (intent == null)
             return
-        intent.getSerializableExtra(Constants.EXTRA_INSTRUCTIONS).also { instructions = it as List<Instruction> }
+        intent.getSerializableExtra(Constants.EXTRA_INSTRUCTIONS)
+            .also { instructions = it as List<Instruction> }
     }
 }

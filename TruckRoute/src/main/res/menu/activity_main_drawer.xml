@@ -3,30 +3,30 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_cube_outline_black_48dp"
+            android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/menu_home" />
 
         <item
             android:id="@+id/nav_leader_board"
-            android:icon="@drawable/ic_format_line_style_black_48dp"
+            android:icon="@drawable/ic_leaderboard"
             android:title="@string/menu_leader_board" />
 
         <item
             android:id="@+id/nav_permit"
-            android:icon="@drawable/ic_format_line_style_black_48dp"
+            android:icon="@drawable/ic_permit"
             android:title="@string/menu_option_permit" />
         <item
             android:id="@+id/nav_food_bank"
-            android:icon="@drawable/ic_message_text_outline_black_48dp"
+            android:icon="@drawable/ic_baseline_food_bank_24"
             android:title="@string/menu_option_food_bank" />
         <item
             android:id="@+id/nav_about_us"
-            android:icon="@drawable/ic_message_text_outline_black_48dp"
+            android:icon="@drawable/ic_about_us"
             android:title="@string/menu_about_us" />
 
         <item
             android:id="@+id/nav_feedback"
-            android:icon="@drawable/ic_message_text_outline_black_48dp"
+            android:icon="@drawable/ic_baseline_feedback_24"
             android:title="@string/menu_feedback" />
     </group>
 </menu>

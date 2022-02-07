@@ -14,7 +14,7 @@ class ManeuversListAdapter(private val instructions: List<Instruction>) :
     RecyclerView.Adapter<ManeuversListAdapter.ViewHolder>() {
 
     companion object {
-        private const val METERS_IN_KM = 1000
+        private const val METERS_IN_MILES = 0.00062137
     }
 
     lateinit var context: Context
@@ -36,12 +36,12 @@ class ManeuversListAdapter(private val instructions: List<Instruction>) :
         holder.description.text = instruction.message
         holder.icon.setImageDrawable(iconManeuverProvider.getIcon(context, instruction))
         val metersToManeuver = instruction.routeOffsetInMeters
-        val kilometersToManeuver = metersToManeuver / METERS_IN_KM
-        if (metersToManeuver > METERS_IN_KM) {
-            holder.distance.text = context.getString(R.string.distance_km, kilometersToManeuver)
-        } else {
-            holder.distance.text = context.getString(R.string.distance_m, metersToManeuver)
-        }
+        val milesToManeuver = metersToManeuver * METERS_IN_MILES
+        //if (metersToManeuver > METERS_IN_KM) {
+            holder.distance.text = context.getString(R.string.distance_miles, milesToManeuver)
+        //} else {
+        //    holder.distance.text = context.getString(R.string.distance_m, metersToManeuver)
+        //}
     }
 
     // return the number of the items in the list
