@@ -3,11 +3,19 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    signingConfigs {
+        release {
+            storeFile file('/Users/ramharshini/EcoWay')
+            storePassword 'ecoway@123'
+            keyAlias 'ecoway'
+            keyPassword 'ecoway@123'
+        }
+    }
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.truckroute.ecoway"
         minSdkVersion 24
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -17,7 +25,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -43,11 +52,11 @@ dependencies {
     implementation 'com.tomtom.online:sdk-search:2.4782'
     implementation 'com.tomtom.online:sdk-routing:2.4782'
     implementation("com.tomtom.online:sdk-routing-rxjava2:2.4782")
-    implementation("com.tomtom.online:sdk-maps-rx-extensions:2.4782")
-    implementation("com.tomtom.online:sdk-maps-ui-extensions:2.4782")
+    //implementation("com.tomtom.online:sdk-maps-rx-extensions:2.4782")
+    //implementation("com.tomtom.online:sdk-maps-ui-extensions:2.4782")
     implementation("com.tomtom.online:sdk-maps-static-image:2.4782")
-    implementation("com.tomtom.online:sdk-maps-driving-extensions:2.4782")
-    implementation("com.tomtom.online:sdk-geofencing:2.4782")
+    //implementation("com.tomtom.online:sdk-maps-driving-extensions:2.4782")
+    //implementation("com.tomtom.online:sdk-geofencing:2.4782")
 
     implementation 'com.google.code.gson:gson:2.8.5'
 

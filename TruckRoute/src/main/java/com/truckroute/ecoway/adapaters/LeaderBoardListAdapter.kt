@@ -14,10 +14,6 @@ import com.truckroute.ecoway.models.LeaderBoardModel
 class LeaderBoardListAdapter(private val instructions: List<LeaderBoardModel>) :
     RecyclerView.Adapter<LeaderBoardListAdapter.ViewHolder>() {
 
-    companion object {
-        private const val METERS_IN_KM = 1000
-    }
-
     lateinit var context: Context
     private var leaderBoardIconProvider: LeaderBoardIconProvider = LeaderBoardIconProvider()
 

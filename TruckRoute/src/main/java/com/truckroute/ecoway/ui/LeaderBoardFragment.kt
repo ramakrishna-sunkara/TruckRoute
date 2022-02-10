@@ -9,19 +9,12 @@ import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import com.truckroute.ecoway.R
 import com.truckroute.ecoway.adapaters.LeaderBoardListAdapter
-import com.truckroute.ecoway.getJsonDataFromAsset
 import com.truckroute.ecoway.models.LeaderBoardModel
 import kotlinx.android.synthetic.main.fragment_leader_board.*
 
 class LeaderBoardFragment : Fragment() {
 
     private lateinit var leaderBoardModelList: List<LeaderBoardModel>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -46,14 +39,5 @@ class LeaderBoardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_leader_board, container, false)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            LeaderBoardFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
     }
 }

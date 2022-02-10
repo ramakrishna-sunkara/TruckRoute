@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.tomtom.online.sdk.routing.route.information.Instruction
-import com.truckroute.ecoway.Constants
+import com.truckroute.ecoway.ui.Constants
 import com.truckroute.ecoway.R
 import com.truckroute.ecoway.adapaters.ManeuversListAdapter
 import kotlinx.android.synthetic.main.activity_maneuvers_list.*

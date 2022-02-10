@@ -33,7 +33,7 @@ import com.truckroute.ecoway.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
