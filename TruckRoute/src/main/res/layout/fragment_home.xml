@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_elevation_main"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_main_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_main_locations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_elevation_main"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_main_locations_departure"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageview_main_departure_icon"
+                        android:layout_width="@dimen/app_icon_size"
+                        android:layout_height="@dimen/app_icon_size"
+                        android:layout_marginStart="@dimen/spacing_normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_start_icon" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/atv_main_departure_location"
+                        android:layout_width="@dimen/match_constraint_dimension"
+                        android:hint="@string/enter_location"
+                        android:layout_height="@dimen/app_button_height"
+                        android:layout_marginStart="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_normal"
+                        android:background="@drawable/background_with_border_main"
+                        android:fontFamily="@font/gotham_book"
+                        android:imeOptions="actionSearch"
+                        android:inputType="textPersonName"
+                        android:paddingStart="@dimen/spacing_medium"
+                        android:paddingEnd="@dimen/spacing_xxxlarge"
+                        android:textColor="@color/color_all_text"
+                        android:textSize="@dimen/text_large"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageview_main_departure_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/button_departure_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintBottom_toBottomOf="@+id/atv_main_departure_location"
+                        app:layout_constraintEnd_toEndOf="@+id/atv_main_departure_location"
+                        app:layout_constraintTop_toTopOf="@+id/atv_main_departure_location"
+                        app:srcCompat="@drawable/ic_close" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_main_locations_arrival"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_main_locations_departure">
+
+                    <ImageView
+                        android:id="@+id/imageview_main_arrival_icon"
+                        android:layout_width="@dimen/app_icon_size"
+                        android:layout_height="@dimen/app_icon_size"
+                        android:layout_marginStart="@dimen/spacing_normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_destination_icon" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/atv_main_destination_location"
+                        android:layout_width="@dimen/match_constraint_dimension"
+                        android:layout_height="@dimen/app_button_height"
+                        android:layout_marginStart="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_normal"
+                        android:background="@drawable/background_with_border_main"
+                        android:fontFamily="@font/gotham_book"
+                        android:imeOptions="actionSearch"
+                        android:inputType="textPersonName"
+                        android:paddingStart="@dimen/spacing_medium"
+                        android:hint="@string/enter_location"
+                        android:paddingEnd="@dimen/spacing_xxxlarge"
+                        android:textColor="@color/color_all_text"
+                        android:textSize="@dimen/text_large"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageview_main_arrival_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/button_destination_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintBottom_toBottomOf="@+id/atv_main_destination_location"
+                        app:layout_constraintEnd_toEndOf="@+id/atv_main_destination_location"
+                        app:layout_constraintTop_toTopOf="@+id/atv_main_destination_location"
+                        app:srcCompat="@drawable/ic_close" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_main_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_elevation_main"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_main_locations">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_main_settings_arrive_at"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginTop="@dimen/spacing_xxlarge"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/text_view_main_arrive_at"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gotham_bold"
+                        android:text="@string/main_arrive_at"
+                        android:textColor="@color/color_all_text"
+                        android:textSize="@dimen/text_medium"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/text_view_main_arrive_at_hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="21dp"
+                        android:fontFamily="@font/gotham_book"
+                        android:text="@string/time_default_value"
+                        android:textColor="@color/color_all_text"
+                        android:textSize="@dimen/text_xxlarge"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/text_view_main_arrive_at_am_pm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:layout_marginBottom="@dimen/spacing_tiny"
+                        android:fontFamily="@font/gotham_book"
+                        android:text="@string/main_am_pm_default_value"
+                        android:textColor="@color/color_all_text"
+                        android:textSize="@dimen/text_larger"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/text_view_main_arrive_at_hour" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_dropdown_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_main_settings_arrive_at">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.50"/>
+
+                    <TextView
+                        android:id="@+id/txt_arrive_at_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/depart_at"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_arrive_at"
+                        style="@style/style_label_text"
+                        android:background="@drawable/background_with_border_main"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/time_default_value"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/txt_arrive_at_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_depart_at_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/arrive_at"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        app:layout_constraintTop_toBottomOf="@id/txt_arrive_at"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_depart_at"
+                        style="@style/style_label_text"
+                        android:background="@drawable/background_with_border_main"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/time_default_value"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/txt_depart_at_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_route_type_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/route_type"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_depart_at"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_route_type"
+                        style="@style/style_spn_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/route_type"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/txt_route_type_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_travel_mode_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/travel_mode"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_route_type"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_travel_mode"
+                        style="@style/style_spn_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/travel_mode"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_travel_mode_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_vehicle_load_type_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vehicle_load_type"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_travel_mode"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_vehicle_load_type"
+                        style="@style/style_spn_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vehicle_load_type"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_vehicle_load_type_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_vehicle_weight_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/weight_kgs"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_vehicle_load_type"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <EditText
+                        android:id="@+id/edt_vehicle_weight"
+                        style="@style/style_edit_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/weight"
+                        android:maxLength="5"
+                        android:inputType="numberDecimal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_vehicle_weight_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_vehicle_length_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/length_meters"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        app:layout_constraintTop_toBottomOf="@+id/edt_vehicle_weight"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <EditText
+                        android:id="@+id/edt_vehicle_length"
+                        style="@style/style_edit_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/length"
+                        android:maxLength="5"
+                        android:inputType="numberDecimal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_vehicle_length_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_vehicle_height_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/height_meters"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        app:layout_constraintTop_toBottomOf="@+id/edt_vehicle_length"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <EditText
+                        android:id="@+id/edt_vehicle_height"
+                        style="@style/style_edit_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/height"
+                        android:maxLength="5"
+                        android:inputType="numberDecimal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_vehicle_height_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                    <TextView
+                        android:id="@+id/txt_vehicle_width_label"
+                        style="@style/style_label_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/width_meters"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        app:layout_constraintTop_toBottomOf="@+id/edt_vehicle_height"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+                    <EditText
+                        android:id="@+id/edt_vehicle_width"
+                        style="@style/style_edit_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/width"
+                        android:maxLength="5"
+                        android:inputType="numberDecimal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_vehicle_width_label"
+                        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_main_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/spacing_normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_main_settings">
+
+                <Button
+                    android:id="@+id/button_main_start"
+                    style="@style/style_app_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/app_button_height"
+                    android:layout_marginHorizontal="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:text="@string/start"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
