@@ -261,7 +261,7 @@ class CountdownActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun changeRouteTypeButtonStates(btnText: String) {
         when (btnText) {
-            getString(R.string.echo) -> {
+            getString(R.string.eco) -> {
                 btnEcho.background =
                     ContextCompat.getDrawable(applicationContext, R.drawable.btn_bg_selected)
                 btnFastest.background =

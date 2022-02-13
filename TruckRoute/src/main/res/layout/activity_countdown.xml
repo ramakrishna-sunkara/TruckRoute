@@ -159,7 +159,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="@dimen/app_button_height_small"
-            android:text="@string/echo" />
+            android:text="@string/eco" />
         <Button
             android:id="@+id/btnFastest"
             style="@style/style_app_button_small"
