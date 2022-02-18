@@ -20,7 +20,12 @@
     <string name="shared_preference_name">PREFERENCE</string>
     <string name="shared_preference_first_run">isFirstRun</string>
     <string name="location_permissions_denied">Location permissions request has been denied.</string>
-    <string name="about_app">This app is to find route between two locations. and will give suggestions based on time and route</string>
+    <string name="about_app"><![CDATA[<br><p style="color:#000000">EcoWay 2.0 was developed by Team Warriors from Sacramento, California, USA.
+We are a robotics team representing the First Lego League.  We have eight members in the team. EcoWay 2.0 was developed for the Cargo Connect project. This app provides Eco routing to Truckers and other Travel modes. Choosing an Eco route will reduce air pollution and fuel consumption.
+</p><br/>
+        <p style="color:#000000">Please contact us at  <a href="mailto:fllteamwarriors@gmail.com">fllteamwarriors@gmail.com</a> if you have any questions.</p>
+<br/>
+            <p style="color:#000000">Website: <a href="https://fllteamwarriors.wixsite.com/cargoconnect">https://fllteamwarriors.wixsite.com/cargoconnect</a></p>]]></string>
     <string name="about_title">@string/app_name</string>
     <string name="user_name">Username</string>
     <string name="password">Password</string>

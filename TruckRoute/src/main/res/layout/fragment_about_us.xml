@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_destination_icon" />
+        app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/textview_help_title"
@@ -37,7 +37,6 @@
         android:layout_marginBottom="@dimen/spacing_medium"
         android:layout_margin="@dimen/spacing_normal"
         android:fontFamily="@font/gotham_book"
-        android:text="@string/about_app"
         android:textAlignment="center"
         android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toEndOf="parent"

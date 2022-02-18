@@ -11,13 +11,13 @@ android {
             keyPassword 'ecoway@123'
         }
     }
-    compileSdkVersion 31
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.truckroute.ecoway"
         minSdkVersion 24
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 30
+        versionCode 3
+        versionName "1.2"
 
         buildConfigField("String", "MAPS_API_KEY", '"DbY8MWPCEQw654ASAoVJroXpyQGqXG5U"')
         buildConfigField("String", "ROUTING_API_KEY", '"DbY8MWPCEQw654ASAoVJroXpyQGqXG5U"')
@@ -25,7 +25,6 @@ android {
     }
     buildTypes {
         release {
-            shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
