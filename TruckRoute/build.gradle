@@ -16,8 +16,8 @@ android {
         applicationId "com.truckroute.ecoway"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 5
-        versionName "1.4"
+        versionCode 6
+        versionName "1.5"
 
         buildConfigField("String", "MAPS_API_KEY", '"DbY8MWPCEQw654ASAoVJroXpyQGqXG5U"')
         buildConfigField("String", "ROUTING_API_KEY", '"DbY8MWPCEQw654ASAoVJroXpyQGqXG5U"')
