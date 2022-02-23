@@ -86,4 +86,6 @@ We are a robotics team representing the First Lego League.  We have eight member
     <string name="menu_logout">Logout</string>
     <string name="select">Select</string>
 
+    <string name="click_here_test"><![CDATA[<br><p style="color:#000000"><u>Click here</u> to test EcoWay2.0</p>]]></string>
+
 </resources>

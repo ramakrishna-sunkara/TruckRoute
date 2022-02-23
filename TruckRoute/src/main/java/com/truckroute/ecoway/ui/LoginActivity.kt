@@ -2,10 +2,12 @@ package com.truckroute.ecoway.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.truckroute.ecoway.R
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_about_us.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -19,6 +21,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         btnLogin.setOnClickListener { doLogin() }
+        textview_goto_direct_home.text = Html.fromHtml(getString(R.string.click_here_test), Html.FROM_HTML_MODE_COMPACT);
+        textview_goto_direct_home.setOnClickListener {
+            goToHome()
+        }
     }
 
     private fun doLogin() {
@@ -37,10 +43,7 @@ class LoginActivity : AppCompatActivity() {
                     getString(R.string.login_success, userName),
                     Toast.LENGTH_SHORT
                 ).show()
-                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-                finish()
+                goToHome()
             } else {
                 Toast.makeText(
                     applicationContext,
@@ -49,5 +52,12 @@ class LoginActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    private fun goToHome() {
+        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
     }
 }
